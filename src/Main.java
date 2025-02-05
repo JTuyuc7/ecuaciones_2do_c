@@ -71,20 +71,22 @@ public class Main {
 
             // Set para almacenar ecuaciones válidas y evitar duplicados
             Set<String> validEquations = new HashSet<>();
+            List<List<String>> listaDeListas = List.of();
 
             while ((token = lexer.yylex()) != null){
                 // Obtén la lista de listas generadas por el lexer
-                List<List<String>> listaDeListas = lexer.getListaDeListas();
+                listaDeListas = lexer.getListaDeListas();
 
-                for (List<String> lista : listaDeListas) {
-                    String joinedList = String.join("", lista);
-                    System.out.println("Procesando: " + joinedList);
-                    // Si la cadena cumple el patrón y aún no se ha añadido, se procesa
-                    if(pattern.matcher(joinedList).matches() && !validEquations.contains(joinedList)){
-                        validEquations.add(joinedList);
-                        System.out.println("Cadena válida: " + joinedList);
-                        outputArea.append("Cadena válida " + joinedList + "\n");
-                    }
+            }
+
+            for (List<String> lista : listaDeListas) {
+                String joinedList = String.join("", lista);
+                System.out.println("Procesando: " + joinedList);
+                // Si la cadena cumple el patrón y aún no se ha añadido, se procesa
+                if(pattern.matcher(joinedList).matches() && !validEquations.contains(joinedList)){
+                    validEquations.add(joinedList);
+                    System.out.println("Cadena válida: " + joinedList);
+                    outputArea.append("Cadena válida " + joinedList + "\n");
                 }
             }
         } catch (Exception e){
